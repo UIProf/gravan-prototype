@@ -13,6 +13,8 @@ mongoose.connect(
     { useNewUrlParser: true, useUnifiedTopology: true}
 );
 
+// mongoose.Promise = global.Promise;
+
 app.use(morgan('dev')); // for see the log and request log  and time of  reaquest response
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
