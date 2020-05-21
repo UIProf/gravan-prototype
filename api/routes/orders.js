@@ -7,29 +7,30 @@ const Product = require('../models/product');
 
 router.get('/', (req, res, next) => {
     Order.find()
-        .select('product quantity _id')
-        .exec()
-        .then( orderRes => {
-            res.json({
-                count: orderRes.length,
-                orders: orderRes.map( doc => {
-                    return {
-                        _id: doc._id,
-                        product: doc.product,
-                        quantity: doc.quantity,
-                        request: {
-                            type: 'GET',
-                            URL: '/orders/' + doc._id
-                        }
-                    }
-                })
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: err
-            });
+      .select("product quantity _id")
+      .populate("product", 'name')
+      .exec()
+      .then(orderRes => {
+        res.json({
+          count: orderRes.length,
+          orders: orderRes.map(doc => {
+            return {
+              _id: doc._id,
+              product: doc.product,
+              quantity: doc.quantity,
+              request: {
+                type: "GET",
+                URL: "/orders/" + doc._id
+              }
+            };
+          })
         });
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
+      });
 });
 
 router.post("/", (req, res,) => {
@@ -74,6 +75,7 @@ router.post("/", (req, res,) => {
 
 router.get("/:orderId", (req, res, next) => {
     Order.findById(req.params.orderId)
+        .populate('product')
         .exec()
         .then(order => {
             if (!order) {
