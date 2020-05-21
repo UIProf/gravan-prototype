@@ -10,10 +10,10 @@ const orderRoutes = require("./api/routes/orders");
 
 mongoose.connect(
   'mongodb+srv://node-shop:'+ process.env.MONGO_ATLAS_PW +'@node-rest-shop-2lhdw.mongodb.net/test?retryWrites=true&w=majority',
-    { useNewUrlParser: true, useUnifiedTopology: true}
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
 );
 
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 app.use(morgan('dev')); // for see the log and request log  and time of  reaquest response
 app.use(bodyParser.urlencoded({extended: false}));
