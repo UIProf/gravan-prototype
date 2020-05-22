@@ -16,6 +16,7 @@ mongoose.connect(
 mongoose.Promise = global.Promise;
 
 app.use(morgan('dev')); // for see the log and request log  and time of  reaquest response
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
